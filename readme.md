@@ -38,7 +38,7 @@ cd C:\project
 ```
 1. Clone repo
 ```
-git clone https://github.com/kulsuri/jupiter-coding-test
+git clone https://github.com/kulsuri/B2C2
 ```
 4. Navigate to the project folder e.g.
 ```
@@ -53,6 +53,12 @@ pip install -r requirements.txt
 1. Navigate to the project folder and run the command:
 ```
 python app.py
+```
+
+# Using the App
+Enter a number (1-8) for the corresponding request
+```
+tbc
 ```
 
 # Technologies
