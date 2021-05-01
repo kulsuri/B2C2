@@ -1,4 +1,28 @@
+
+# - command line interface
+# - request prices from api for given instrument 
+#     - e.g. BTCUSD
+#     - side (buy/sell)
+#     - quantity
+# - request instruments available to trade
+# - return 'request for quote' info
+# - execute the order
+# - display total balance of the account
+# - message displaying the trade information contained in the order response
+
+# error handling:
+#     - sending an outdated quote
+#     - HTTP error from the server
+#     - losing internet connection
+# logging
+
+# other features:
+# ping to check if the connection is ok
+# ledgers to get your history
+#  /trade/id/ to get specific information about a trade
+
 import click
+import uuid
 from library import b2c2_lib
 
 api = 'https://api.uat.b2c2.net'
@@ -29,34 +53,3 @@ def handle_menu(menu):
 
 if __name__ == '__main__':
     handle_menu()
-
-# @click.group()
-# def main():
-#     """Demo WP Control Help"""
-
-# @main.group()
-# def wp():
-#     """Commands for WP"""
-
-# @wp.command('install')
-# def wp_install():
-#     """Install WP instance"""
-
-# @wp.command('duplicate')
-# def wp_dup():
-#     """Duplicate WP instance"""
-
-# @main.group()
-# def https():
-#     """Commands for HTTPS"""
-
-# @https.command('create')
-# def https_create():
-#     """Create HTTPS configuration"""
-
-# @https.command('sync')
-# def https_sync():
-#     """Sync HTTPS configuration with Apache"""
-
-# if __name__ == '__main__':
-#     main()

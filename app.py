@@ -1,54 +1,100 @@
-
-# - command line interface
-# - request prices from api for given instrument 
-#     - e.g. BTCUSD
-#     - side (buy/sell)
-#     - quantity
-# - request instruments available to trade
-# - return 'request for quote' info
-# - execute the order
-# - display total balance of the account
-# - message displaying the trade information contained in the order response
-
-# error handling:
-#     - sending an outdated quote
-#     - HTTP error from the server
-#     - losing internet connection
-# logging
-
-# other features:
-# ping to check if the connection is ok
-# ledgers to get your history
-#  /trade/id/ to get specific information about a trade
-
 import click
+import pprint
 from library import b2c2_lib
 
-api = 'https://api.uat.b2c2.net'
-api_token = 'e13e627c49705f83cbe7b60389ac411b6f86fee7'
+# initialize CLI
+@click.group()
+def cli():
+    """CLI app to interact with B2C2 API"""
 
-@click.command()
-@click.option('--menu', prompt= ' \
-################################################### \n \
-(1) View tradable instruments \n \
-(2) Request for Quote \n \
-(3) Execute order \n \
-(4) View account balance \n \
-(5) Check connection status \n \
-(6) View trade history \n \
-(7) View specific trade information \n \
-(8) Exit \n \
-################################################### \n \
-What would you like to do? Enter number e.g. 5 \n \
----------------------------------------------------', \
-help='Available options.', type=int)
+# view instruments
+@cli.command()
+def view_instruments():
+    """View tradable instruments"""
+    data = b2c2_lib().view_tradable_instruments()
+    click.echo(data)
+    return data
 
-def handle_menu(menu):
-    if menu not in list(range(1,9)):
-        raise Exception(f'No handler found for menu option: {menu}')
-    handler = b2c2_lib(api, api_token).handlers[menu]
-    print(handler())
-    #return handle_menu()
+# request for quote
+@cli.command()
+@click.option('--instrument', type=str, prompt='Enter the name of the instrument', help='Tradable instrument name')
+@click.option('--side', type=click.Choice(['buy', 'sell'], case_sensitive=False), prompt='Enter the side of the trade', help='Side of the trade')
+@click.option('--quantity', type=float, prompt='Enter the quantity', help='Quantity to trade')
+def request_for_quote(instrument, side, quantity):
+    """Request for Quote"""
+    print(f'{side} {instrument} {quantity}')
 
-if __name__ == '__main__':
-    handle_menu()
+    #rfq_data = (instrument, side, quantity)
+        
+    data = b2c2_lib(instrument, side, quantity).request_for_quote()
+    pprint.pprint(data)
+    return data
+
+@cli.group()
+def req_for_qoute():
+    """Request for Quote"""
+
+@req_for_qoute.command()
+@click.option('--instrument', default="dev", type=click.Choice(['dev', 'stg', 'prd'], case_sensitive=False), prompt='Enter env name to deploy', help='Env to deploy')
+@click.option('--side', default="buy", type=click.Choice(['aws', 'gcp', 'azure'], case_sensitive=False), prompt='Enter cloud to deploy to', help='Cloud to deploy to')
+@click.option('--quantity', type=float, prompt='Enter cloud to deploy to', help='Quantity to trade')
+def rfq_data(env, cloud):
+    print(f'{side} {instrument} {quantity}')
+
+# execute order
+@cli.command()
+def execute_order():
+    """Execute order"""
+
+# view account balance
+@cli.command()
+def view_balance():
+    """View account balance"""
+    data = b2c2_lib().view_account_balance()
+    click.echo(data)
+    return data
+
+# check connection status
+@cli.command()
+def connection_status():
+    """Check connection status"""
+    data = b2c2_lib().check_connection_status()
+    click.echo(data)
+    return data
+
+# view ledger
+@cli.command()
+def view_ledger():
+    """View ledger"""
+    data = b2c2_lib().view_ledger()
+    click.echo(data)
+    return data
+
+# view trade info
+@cli.command()
+def trade_history():
+    """View specific trade information"""
+    data = b2c2_lib().view_trade_info()
+    click.echo(data)
+    return data
+
+@cli.command()
+def exit():
+    """Exit app"""
+    b2c2_lib().exit_app()
+
+# @cli.group()
+# def drop():
+#     """create objects"""
+
+# @drop.command()
+# def table():
+#     click.echo('drop table command')
+
+# @drop.command()
+# @click.option('--username')
+# def user(username):
+#     click.echo('drop user command: {}'.format(username))
+
+if __name__ == "__main__":
+    cli()
