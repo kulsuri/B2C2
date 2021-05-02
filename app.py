@@ -20,13 +20,10 @@ def view_instruments():
 @click.option('--instrument', type=str, prompt='Enter the name of the instrument', help='Tradable instrument name')
 @click.option('--side', type=click.Choice(['buy', 'sell'], case_sensitive=False), prompt='Enter the side of the trade', help='Side of the trade')
 @click.option('--quantity', type=float, prompt='Enter the quantity', help='Quantity to trade')
-#@click.pass_context
 def request_for_quote(instrument, side, quantity):
     """Request for Quote"""
     print(f'{side} {instrument} {quantity}')
 
-    #rfq_data = (instrument, side, quantity)
-        
     quote_data = b2c2_lib(instrument, side, quantity).request_for_quote()
     pprint.pprint(quote_data)
 
@@ -48,18 +45,6 @@ def request_for_quote(instrument, side, quantity):
         return print(execute_order_data)
     else:
         return print(quote_data)
-
-
-# @cli.group()
-# def req_for_qoute():
-#     """Request for Quote"""
-
-# @req_for_qoute.command()
-# @click.option('--instrument', default="dev", type=click.Choice(['dev', 'stg', 'prd'], case_sensitive=False), prompt='Enter env name to deploy', help='Env to deploy')
-# @click.option('--side', default="buy", type=click.Choice(['aws', 'gcp', 'azure'], case_sensitive=False), prompt='Enter cloud to deploy to', help='Cloud to deploy to')
-# @click.option('--quantity', type=float, prompt='Enter cloud to deploy to', help='Quantity to trade')
-# def rfq_data(env, cloud):
-#     print(f'{side} {instrument} {quantity}')
 
 # execute order
 # @cli.command()
@@ -104,19 +89,6 @@ def trade_history():
 def exit():
     """Exit app"""
     b2c2_lib().exit_app()
-
-# @cli.group()
-# def drop():
-#     """create objects"""
-
-# @drop.command()
-# def table():
-#     click.echo('drop table command')
-
-# @drop.command()
-# @click.option('--username')
-# def user(username):
-#     click.echo('drop user command: {}'.format(username))
 
 if __name__ == "__main__":
     cli()
