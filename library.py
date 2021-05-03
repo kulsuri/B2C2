@@ -30,19 +30,20 @@ class b2c2_lib:
 
         # implement instrument input validity
         instrument_valid = self.check_instrument_valid( self.data[0] )
-        
 
-        post_data = {
-            'instrument': self.data[0],
-            'side': self.data[1],
-            'quantity': self.data[2],
-            'client_rfq_id': str(uuid.uuid4())
-            }
-        print(post_data)
+        if instrument_valid == True:
+            post_data = {
+                'instrument': self.data[0],
+                'side': self.data[1],
+                'quantity': self.data[2],
+                'client_rfq_id': str(uuid.uuid4())
+                }
+            print(post_data)
 
-        response = requests.post('%s/request_for_quote/' % self.api, json=post_data, headers=self.headers)
-        return response
-
+            response = requests.post('%s/request_for_quote/' % self.api, json=post_data, headers=self.headers)
+            return response
+        else:
+            return False #'Instrument not valid. Please check and try again.'
     
     def execute_order(self):
         print('execute order')
@@ -52,34 +53,8 @@ class b2c2_lib:
         # implement check quote validity
         quote_valid = self.check_quote_validity( self.data[0]['valid_until'] )
 
-        # if quote_valid:
-        #     post_data = {
-        #     'instrument': self.data[0]['instrument'],
-        #     'side': self.data[0]['side'],
-        #     'quantity': self.data[0]['quantity'],
-        #     'client_order_id': self.data[0]['client_rfq_id'],
-        #     'price': self.data[0]['price'],
-        #     'order_type': 'FOK',
-        #     'valid_until': self.data[0]['valid_until']
-        #     }
-
-        #     print(post_data)
-
-        #     response = requests.post('%s/order/' % self.api, json=post_data, headers=self.headers)
-        #     return response
-        
-        # else:
-        #     return 'Quote expired'
-
-
-        # uuid = self.data[0]['client_rfq_id'] #str(uuid.uuid4())
-        # quantity = self.data[0]['quantity']
-        # side = self.data[0]['side']
-        # instrument = self.data[0]['instrument']
-        # price = self.data[0]['price']
-        # valid_until = self.data[0]['valid_until']
-
-        post_data = {
+        if quote_valid:
+            post_data = {
             'instrument': self.data[0]['instrument'],
             'side': self.data[0]['side'],
             'quantity': self.data[0]['quantity'],
@@ -87,12 +62,30 @@ class b2c2_lib:
             'price': self.data[0]['price'],
             'order_type': 'FOK',
             'valid_until': self.data[0]['valid_until']
-        }
+            }
 
-        print(post_data)
+            print(post_data)
 
-        response = requests.post('%s/order/' % self.api, json=post_data, headers=self.headers)
-        return response
+            response = requests.post('%s/order/' % self.api, json=post_data, headers=self.headers)
+            return response
+        
+        else:
+            return False
+
+        # post_data = {
+        #     'instrument': self.data[0]['instrument'],
+        #     'side': self.data[0]['side'],
+        #     'quantity': self.data[0]['quantity'],
+        #     'client_order_id': self.data[0]['client_rfq_id'],
+        #     'price': self.data[0]['price'],
+        #     'order_type': 'FOK',
+        #     'valid_until': self.data[0]['valid_until']
+        # }
+
+        # print(post_data)
+
+        # response = requests.post('%s/order/' % self.api, json=post_data, headers=self.headers)
+        # return response
 
     def check_quote_validity(self, quote_valid_until):
         dt_now = datetime.datetime.utcnow()
@@ -102,11 +95,15 @@ class b2c2_lib:
 
         if dt_now < quote_valid_time_dt_naive:
             return True
-        else:
-            return False
+        # else:
+        #     return False
 
     def check_instrument_valid(self, instrument):
-        return None
+        tradable_instruments = self.view_tradable_instruments()
+
+        for i in tradable_instruments:
+            if instrument.lower() == i['name'].lower():
+                return True
     
     def view_account_balance(self):
         print('view account balance')
@@ -131,7 +128,3 @@ class b2c2_lib:
         print('trade info')
         response = requests.get('%s/trade/' % self.api, headers=self.headers)
         return response
-    
-    # def exit_app(self):
-    #     print('exiting app')
-    #     exit()
