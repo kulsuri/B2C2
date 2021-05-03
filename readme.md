@@ -30,6 +30,8 @@ Command line interface to interact and trade with the B2C2 api
 - Python 3
 - Pip
 - Git
+- B2C2 sandbox API token
+- Whitelist client machine IP address
 
 # Installation Instructions
 
