@@ -3,3 +3,4 @@ click
 uuid
 datetime
 dateutil.parser
+pprint
