@@ -3,7 +3,10 @@
 Command line interface to interact and trade with the B2C2 api
 
 # Screenshot
-![screengrab](https://media.giphy.com/media/yRx7YJn3sn3lSexn19/giphy.gif)
+![alt text](https://i.ibb.co/JCXG7NS/Screenshot-2021-05-03-101008.jpg)
+
+# Demo
+![screengrab](https://media.giphy.com/media/pHXnQsrGs5N7mmSn7Z/giphy.gif)
 
 # What Does This App Do?
 1. command line interface
@@ -50,26 +53,52 @@ pip install -r requirements.txt
 ```
 
 # Run the App
-1. Navigate to the project folder and run the command:
+Navigate to the project folder and run the command:
 ```
 python app.py
 ```
 
-# Using the App
-Enter a number (1-8) for the corresponding request
+# Using the App (Commands)
+1. View tradable instruments
+```
+tbc
+```
+2. Request a quote
+```
+tbc
+```
+3. Execute a quote (order)
+```
+tbc
+```
+4. View trade history
+```
+tbc
+```
+5. View ledger
+```
+tbc
+```
+6. View balance
+```
+tbc
+```
+7. Check the connection status
 ```
 tbc
 ```
 
-# Technologies
+# Technologies (modules)
 - requests
 - click
+- uuid
+- datetime
 
 # How Does It Work?
 
 File | Technology | What Does It Do
 --- | --- | ---
-`app.py` | click | runs the app, handles routes / requests and calls objects from the other files
+`app.py` | click | runs the app, handles the CLI and calls objects from the other files
 `library.py` | requests | library of functions for interacting with the B2C2 API
 
 

@@ -1,2 +1,5 @@
 requests
 click
+uuid
+datetime
+dateutil.parser

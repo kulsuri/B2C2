@@ -11,9 +11,17 @@ def cli():
 @cli.command()
 def view_instruments():
     """View tradable instruments"""
-    data = b2c2_lib().view_tradable_instruments()
-    click.echo(data)
-    return data
+    tradable_instruments = b2c2_lib().view_tradable_instruments()
+    #click.echo(tradable_instruments)
+    print(tradable_instruments)
+    return tradable_instruments
+
+# @cli.command()
+# @click.option('--instrument', type=click.Choice(view_instruments(), case_sensitive=False), prompt='Enter the name of the instrument', help='Tradable instrument name')
+# def test(instrument):
+#     """test"""
+#     print(instrument)
+#     return instrument
 
 # request for quote
 @cli.command()
@@ -57,38 +65,42 @@ def request_for_quote(instrument, side, quantity):
 @cli.command()
 def view_balance():
     """View account balance"""
-    data = b2c2_lib().view_account_balance()
-    click.echo(data)
-    return data
+    account_balance = b2c2_lib().view_account_balance()
+    print(account_balance)
+    #click.echo(account_balance)
+    return account_balance
 
 # check connection status
 @cli.command()
 def connection_status():
     """Check connection status"""
-    data = b2c2_lib().check_connection_status()
-    click.echo(data)
-    return data
+    conn_status = b2c2_lib().check_connection_status()
+    print(conn_status)
+    #click.echo(conn_status)
+    return conn_status
 
 # view ledger
 @cli.command()
 def view_ledger():
     """View ledger"""
-    data = b2c2_lib().view_ledger()
-    click.echo(data)
+    ledger = b2c2_lib().view_ledger()
+    print(ledger)
+    #click.echo(ledger)
     return data
 
 # view trade info
 @cli.command()
 def trade_history():
     """View specific trade information"""
-    data = b2c2_lib().view_trade_info()
-    click.echo(data)
+    trade_info = b2c2_lib().view_trade_info()
+    print(trade_info)
+    #click.echo(trade_info)
     return data
 
-@cli.command()
-def exit():
-    """Exit app"""
-    b2c2_lib().exit_app()
+# @cli.command()
+# def exit():
+#     """Exit app"""
+#     b2c2_lib().exit_app()
 
 if __name__ == "__main__":
     cli()
