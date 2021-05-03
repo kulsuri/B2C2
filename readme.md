@@ -6,7 +6,7 @@ Command line interface to interact and trade with the B2C2 api
 ![alt text](https://i.ibb.co/JCXG7NS/Screenshot-2021-05-03-101008.jpg)
 
 # Demo
-![screengrab](https://media.giphy.com/media/pHXnQsrGs5N7mmSn7Z/giphy.gif)
+![screengrab](https://media.giphy.com/media/J8nLejm9Fu6eToMM1F/giphy.gif)
 
 # What Does This App Do?
 1. command line interface
