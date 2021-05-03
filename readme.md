@@ -10,22 +10,21 @@ Command line interface to interact and trade with the B2C2 api
 
 # What Does This App Do?
 1. command line interface
-2. request prices from api for given instrument 
+2. request instruments available to trade
+3. request prices from api for given instrument 
 - e.g. BTCUSD
 - side (buy/sell)
 - quantity
-3. request instruments available to trade
-4. return 'request for quote' info
-5. execute orders
-6. display total balance of the account
-7. ping to check if the connection is ok
-8. ledgers to get trade history
-9. get specific information about a trade
-10. error handling:
+4. execute orders
+5. display total balance of the account
+6. ping to check if the connection is ok
+7. ledgers to get trade history
+8. get specific information about a trade
+9. error handling:
 - sending an outdated quote
 - HTTP error from the server
 - losing internet connection
-11. logging
+11. ~~logging~~
 
 # Pre-requisites
 - Python 3
@@ -61,11 +60,11 @@ python app.py
 # Using the App (Commands)
 1. View tradable instruments
 ```
-tbc
+python app.py view-instruments
 ```
 2. Request a quote
 ```
-tbc
+python app.py request-for-quote
 ```
 3. Execute a quote (order)
 ```
@@ -73,19 +72,19 @@ tbc
 ```
 4. View trade history
 ```
-tbc
+python app.py trade-history
 ```
 5. View ledger
 ```
-tbc
+python app.py view-ledger
 ```
 6. View balance
 ```
-tbc
+python app.py view-balance
 ```
 7. Check the connection status
 ```
-tbc
+python app.py connection-status
 ```
 
 # Technologies (modules)
