@@ -68,9 +68,22 @@ python app.py view-instruments
 ```
 python app.py request-for-quote
 ```
+```
+ENTER INSTRUMENT NAME e.g. BTCUSD
+> ethgbp
+```
+```
+ENTER THE SIDE OF THE TRADE (buy, sell):
+> buy
+```
+```
+ENTER QUANTITY
+> 2.345
+```
 3. Execute a quote (order)
 ```
-tbc
+EXECUTE THIS QUOTE? (Y/n)
+> Y
 ```
 4. View trade history
 ```
