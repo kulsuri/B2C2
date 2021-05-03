@@ -11,83 +11,96 @@ def cli():
 @cli.command()
 def view_instruments():
     """View tradable instruments"""
+    print('\n ------------------------------------- \
+            \n VIEW TRADABLE INSTRUMENTS \
+            \n ------------------------------------- \n')
     tradable_instruments = b2c2_lib().view_tradable_instruments()
-    #click.echo(tradable_instruments)
-    print(tradable_instruments)
+    pprint.pprint(tradable_instruments)
     return tradable_instruments
 
 # request for quote
 @cli.command()
-@click.option('--instrument', type=str, prompt='Enter the name of the instrument', help='Tradable instrument name')
-@click.option('--side', type=click.Choice(['buy', 'sell'], case_sensitive=False), prompt='Enter the side of the trade', help='Side of the trade')
-@click.option('--quantity', type=float, prompt='Enter the quantity', help='Quantity to trade')
+@click.option('--instrument', type=str, prompt='\n ENTER INSTRUMENT NAME e.g. BTCUSD \n', help='Tradable instrument name')
+@click.option('--side', type=click.Choice(['buy', 'sell'], case_sensitive=False), prompt='\n ENTER THE SIDE OF THE TRADE \n', help='Side of the trade. Only buy or sell.')
+@click.option('--quantity', type=float, prompt='\n ENTER QUANTITY \n', help='Quantity to trade. Must be a number.')
 def request_for_quote(instrument, side, quantity):
     """Request for Quote"""
-    print(f'{side} {instrument} {quantity}')
+    
+    print('\n ------------------------------------- \
+            \n REQUEST FOR QUOTE \
+            \n ------------------------------------- \n')
 
     quote_data = b2c2_lib(instrument, side, quantity).request_for_quote()
     pprint.pprint(quote_data)
 
     if quote_data != False:
-        quote_data = {
-            "valid_until": "2017-01-01T19:45:22.025464Z",
-            "rfq_id": "d4e41399-e7a1-4576-9b46-349420040e1a",
-            "client_rfq_id": "149dc3e7-4e30-4e1a-bb9c-9c30bd8f5ec7",
-            "quantity": "1.0000000000",
-            "side": "buy",
-            "instrument": "BTCUSD.SPOT",
-            "price": "700.00000000",
-            "created": "2018-02-06T16:07:50.122206Z"
-            }
-
-        execute_decision = input("Would you like to execute this quote? (Y/n)")
+        execute_decision = input('\n ------------------------------------- \
+                                \n EXECUTE THIS QUOTE? (Y/n) \
+                                \n ------------------------------------- \n')
 
         if execute_decision == 'Y':
             execute_order_data = b2c2_lib(quote_data).execute_order()
 
             if execute_order_data != False:
-                return print(execute_order_data)
+                print('\n ------------------------------------- \
+                        \n ORDER FULFILLED \
+                        \n ------------------------------------- \n')
+                print('ACCOUNT BALANCE: \n')
+                pprint.pprint(b2c2_lib().view_account_balance())
+                print('\n ORDER DETAILS: \n')
+                pprint.pprint(execute_order_data)
             else:
-                return print('Quote expired. The time valid has passed.')     
+                print('\n ------------------------------------- \
+                        \n ERROR: QUOTE EXPIRED - TIME VALID PASSED \
+                        \n ------------------------------------- \n')
     else:
-        #print('here')
-        return print('Instrument not valid. Please check and try again.')
+        print('\n ------------------------------------- \
+                \n ERROR: INSTRUMENT INVALID \
+                \n ------------------------------------- \n')
 
 # view account balance
 @cli.command()
 def view_balance():
     """View account balance"""
+    print('\n ------------------------------------- \
+            \n VIEW BALANCE \
+            \n ------------------------------------- \n')
     account_balance = b2c2_lib().view_account_balance()
-    print(account_balance)
-    #click.echo(account_balance)
+    pprint.pprint(account_balance)
     return account_balance
 
 # check connection status
 @cli.command()
 def connection_status():
     """Check connection status"""
+    print('\n ------------------------------------- \
+        \n CONNECTION STATUS \
+        \n ------------------------------------- \n')
     conn_status = b2c2_lib().check_connection_status()
     print(conn_status)
-    #click.echo(conn_status)
     return conn_status
 
 # view ledger
 @cli.command()
 def view_ledger():
     """View ledger"""
+    print('\n ------------------------------------- \
+        \n VIEW LEDGER \
+        \n ------------------------------------- \n')
     ledger = b2c2_lib().view_ledger()
-    print(ledger)
-    #click.echo(ledger)
-    return data
+    pprint.pprint(ledger)
+    return ledger
 
 # view trade info
 @cli.command()
 def trade_history():
     """View specific trade information"""
+    print('\n ------------------------------------- \
+            \n VIEW TRADE \
+            \n ------------------------------------- \n')
     trade_info = b2c2_lib().view_trade_info()
-    print(trade_info)
-    #click.echo(trade_info)
-    return data
+    pprint.pprint(trade_info)
+    return trade_info
 
 if __name__ == "__main__":
     cli()
