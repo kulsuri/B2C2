@@ -21,8 +21,8 @@ def view_instruments():
 # request for quote
 @cli.command()
 @click.option('--instrument', type=str, prompt='\n ENTER INSTRUMENT NAME e.g. BTCUSD \n', help='Tradable instrument name')
-@click.option('--side', type=click.Choice(['buy', 'sell'], case_sensitive=False), prompt='\n ENTER THE SIDE OF THE TRADE \n', help='Side of the trade. Only buy or sell.')
-@click.option('--quantity', type=float, prompt='\n ENTER QUANTITY \n', help='Quantity to trade. Must be a number.')
+@click.option('--side', type=click.Choice(['buy', 'sell'], case_sensitive=False), prompt='\n ENTER THE SIDE OF THE TRADE \n', help='Side of the trade - only buy or sell')
+@click.option('--quantity', type=float, prompt='\n ENTER QUANTITY \n', help='Quantity to trade - must be a number')
 def request_for_quote(instrument, side, quantity):
     """Request for Quote"""
     
@@ -93,12 +93,13 @@ def view_ledger():
 
 # view trade info
 @cli.command()
-def trade_history():
+@click.option('--order_id', type=str, prompt='\n ENTER CLIENT_ORDER_ID OR TRADE_ID OR ORDER FOR SPECIFIC TRADE OR PRESS ENTER FOR ALL TRADES \n', default="", help='Trade order id')
+def trade_history(order_id):
     """View specific trade information"""
     print('\n ------------------------------------- \
             \n VIEW TRADE \
             \n ------------------------------------- \n')
-    trade_info = b2c2_lib().view_trade_info()
+    trade_info = b2c2_lib(order_id).view_trade_info()
     pprint.pprint(trade_info)
     return trade_info
 

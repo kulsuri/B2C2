@@ -101,4 +101,13 @@ class b2c2_lib:
     def view_trade_info(self):
         response = requests.get('%s/trade/' % self.api, headers=self.headers)
         response_json = response.json()
-        return response_json
+        order_id = self.data[0]
+        if len(order_id) == 0:
+            return response_json
+        else:
+            for i,v in enumerate(response.json()):
+                if v['order'] == order_id or v['client_order_id'] == order_id or v['trade_id'] == order_id:
+                #print(v)
+                    return v
+                else:
+                    return 'ERROR: TRADE NOT FOUND'
